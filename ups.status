@@ -1,0 +1,53 @@
+APC      : 001,052,1184
+DATE     : 2023-01-01 00:00:00 +0000  
+HOSTNAME : WinServer
+VERSION  : 3.14.14 (31 May 2016) mingw
+UPSNAME  : UPS_First_Line
+CABLE    : Custom Cable Smart
+DRIVER   : APC Smart UPS (any)
+UPSMODE  : Stand Alone
+STARTTIME: 2023-06-05 15:51:28 +0200  
+MODEL    : Smart-UPS RT 3000 RM XL 
+STATUS   : ONLINE 
+LINEV    : 244.8 Volts
+LOADPCT  : 16.0 Percent
+BCHARGE  : 100.0 Percent
+TIMELEFT : 228.0 Minutes
+MBATTCHG : -1 Percent
+MINTIMEL : -1 Minutes
+MAXTIME  : 0 Seconds
+MAXLINEV : 244.8 Volts
+MINLINEV : 240.4 Volts
+OUTPUTV  : 231.6 Volts
+SENSE    : Auto Adjust
+DWAKE    : 0 Seconds
+DSHUTD   : 20 Seconds
+DLOWBATT : 2 Minutes
+LOTRANS  : 161.0 Volts
+HITRANS  : 253.0 Volts
+RETPCT   : 0.0 Percent
+ITEMP    : 27.4 C
+ALARMDEL : 5 Seconds
+BATTV    : 217.0 Volts
+LINEFREQ : 50.0 Hz
+LASTXFER : Unacceptable line voltage changes
+NUMXFERS : 0
+TONBATT  : 0 Seconds
+CUMONBATT: 0 Seconds
+XOFFBATT : N/A
+SELFTEST : NO
+STESTI   : 336
+STATFLAG : 0x05000008
+DIPSW    : 0x00
+REG1     : 0x00
+REG2     : 0x00
+REG3     : 0x00
+MANDATE  : 01/31/07
+SERIALNO : NS0000000000  
+BATTDATE : 00/01/10
+NOMOUTV  : 230 Volts
+NOMBATTV : 192.0 Volts
+EXTBATTS : 3
+BADBATTS : 0
+FIRMWARE : 450.17.W
+END APC  : 2023-00-00 00:00:00 +0000  

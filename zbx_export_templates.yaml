@@ -1,0 +1,364 @@
+zabbix_export:
+  version: '6.0'
+  date: '2023-06-06T16:05:00Z'
+  groups:
+    - uuid: dcd97c8f29f540139593a7a28eebb213
+      name: Templates
+  templates:
+    - uuid: 6990827b9ab145558bc4aa8d22b2635f
+      template: 'UPS APC'
+      name: 'UPS APC'
+      groups:
+        - name: Templates
+      items:
+        - uuid: ed27bc1a84dc46bfb3527b5bca076be7
+          name: 'Количество неисправных батарейных блоков'
+          key: 'ups.apc["BADBATTS"]'
+          delay: 10m
+          triggers:
+            - uuid: 3ad5d26b0e3e47bc8f2911f18b70021c
+              expression: 'last(/UPS APC/ups.apc["BADBATTS"])>0'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/UPS APC/ups.apc["BADBATTS"])=0'
+              name: 'Bad battery'
+              priority: DISASTER
+        - uuid: e307185282544c74818371202be7ae80
+          name: 'Зарядное напряжение батареи'
+          key: 'ups.apc["BATTV"]'
+          delay: 30s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Volts'
+        - uuid: 93309a859587410680b84cddb3198503
+          name: 'Уровень заряда батарей'
+          key: 'ups.apc["BCHARGE"]'
+          delay: 30s
+          units: '%'
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Percent'
+          triggers:
+            - uuid: 170e4c11ca0246449020236733ce7828
+              expression: 'last(/UPS APC/ups.apc["BCHARGE"])<50'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/UPS APC/ups.apc["BCHARGE"])>50'
+              name: 'Уровень заряда меньше 50%'
+              priority: HIGH
+        - uuid: bab667c51e8d42c7b057d22c170ce6e4
+          name: 'Общее время работы от батарей в секундах с момента запуска apcupsd'
+          key: 'ups.apc["CUMONBATT"]'
+          delay: 10m
+          units: S
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Seconds'
+        - uuid: 7edf6799ca1e4092b0b3137d33f9acd3
+          name: 'Количество внешних батарей'
+          key: 'ups.apc["EXTBATTS"]'
+          delay: 1h
+        - uuid: f89f4b915de5420aac99745c5acf5cd7
+          name: 'Максимальное напряжение для перключения на батареи'
+          key: 'ups.apc["HITRANS"]'
+          delay: 1h
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Volts'
+        - uuid: ceb19c2f2bc1461791f8eaef70db249e
+          name: 'Имя сервера мониторинга'
+          key: 'ups.apc["HOSTNAME"]'
+          delay: 1h
+          trends: '0'
+          value_type: TEXT
+        - uuid: 248c86ef732f4480a884ae3dbe483627
+          name: 'Внутренняя температура ИБП'
+          key: 'ups.apc["ITEMP"]'
+          delay: 30s
+          value_type: FLOAT
+          units: °C
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' C'
+          triggers:
+            - uuid: 7676a3f1d89e457a814e24b47b69ab7a
+              expression: 'last(/UPS APC/ups.apc["ITEMP"])>40'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/UPS APC/ups.apc["ITEMP"])<36'
+              name: 'High temperature UPS'
+              priority: HIGH
+              manual_close: 'YES'
+        - uuid: e1694c45aca54d2282e890eb4870dc84
+          name: 'Причина последнего переключения на батареи'
+          key: 'ups.apc["LASTXFER"]'
+          delay: 10m
+          trends: '0'
+          value_type: TEXT
+        - uuid: 208606627afa4da08044aa3198a1b5ff
+          name: 'Частота севого напряжения'
+          key: 'ups.apc["LINEFREQ"]'
+          delay: 10s
+          value_type: FLOAT
+          units: Hz
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Hz'
+        - uuid: cfe94283ffe24e0892a8b9b13d2fe077
+          name: 'Напряжение на входе ИБП'
+          key: 'ups.apc["LINEV"]'
+          delay: 10s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Volts'
+        - uuid: c0667a2f5c814d21ab0d6c5b2c54172f
+          name: 'Уровень нагрузки ИБП'
+          key: 'ups.apc["LOADPCT"]'
+          delay: 30s
+          units: '%'
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Percent'
+        - uuid: 48e8a5a591294098a830c4ca763c4178
+          name: 'Минимальное напряжение для переключения на батареи'
+          key: 'ups.apc["LOTRANS"]'
+          delay: 1h
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Volts'
+        - uuid: ec198afabc9d469a92dd6b62a16c9a64
+          name: 'Модель ИБП'
+          key: 'ups.apc["MODEL"]'
+          delay: 1h
+          trends: '0'
+          value_type: TEXT
+        - uuid: 2375934bdf2f4a7e8565aec477e1926e
+          name: 'Номинальное напряжение батареи'
+          key: 'ups.apc["NOMBATTV"]'
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Volts'
+        - uuid: 85b198c603014b869b9e15e6c0b7310c
+          name: 'Количество переключений на батареи с момента запуска apcupsd'
+          key: 'ups.apc["NUMXFERS"]'
+          delay: 30s
+        - uuid: 1f862486a83e445e8b8a23c40b34f5e6
+          name: 'Напряжение на выходе ИБП'
+          key: 'ups.apc["OUTPUTV"]'
+          delay: 10s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Volts'
+        - uuid: 500bc69f256a4eb5b8ff175108daeb6d
+          name: 'Результат последнего самотестирования'
+          key: 'ups.apc["SELFTEST"]'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            - type: DISCARD_UNCHANGED
+              parameters:
+                - ''
+        - uuid: 14a82a00bdf2453c81318a8d829f3972
+          name: 'Чуствительность к входному напряжению'
+          key: 'ups.apc["SENSE"]'
+          delay: 1h
+          trends: '0'
+          value_type: TEXT
+        - uuid: 872ff2b0538740759a77c77fc15ad115
+          name: 'Время запуска apcupsd'
+          key: 'ups.apc["STARTTIME"]'
+          trends: '0'
+          value_type: TEXT
+        - uuid: a6cd9c9868d8421b92aff99d80cd7b33
+          name: 'Режим работы ИБП'
+          key: 'ups.apc["STATUS"]'
+          trends: '0'
+          value_type: TEXT
+          triggers:
+            - uuid: 0533b854c90942b89e7604d7b7ac6a94
+              expression: 'find(/UPS APC/ups.apc["STATUS"],,"regexp","NOBATT")=1'
+              name: 'Батареи отсутствуют'
+              priority: HIGH
+            - uuid: 09ba5fb307f44911b6ca42b66d1c353a
+              expression: 'find(/UPS APC/ups.apc["STATUS"],,"regexp","REPLACEBATT")=1'
+              name: 'Требуется замена батареи'
+              priority: HIGH
+        - uuid: d6aa75f2925a4cd89bd9927eb5697fdb
+          name: 'Расчетное время остаточной работы'
+          key: 'ups.apc["TIMELEFT"]'
+          delay: 30s
+          value_type: FLOAT
+          units: Minutes
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Minutes'
+          triggers:
+            - uuid: 2439523c01bb4f6db4a6d15dba0bc73a
+              expression: 'last(/UPS APC/ups.apc["TIMELEFT"])<30'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/UPS APC/ups.apc["TIMELEFT"])>30'
+              name: 'Оставшееся время работы меньше 30 минут'
+              priority: HIGH
+        - uuid: 0f25eece5211443f8d0fe0c4ba2101a1
+          name: 'Время в секундах работы от батарей'
+          key: 'ups.apc["TONBATT"]'
+          units: s
+          preprocessing:
+            - type: RTRIM
+              parameters:
+                - ' Seconds'
+          triggers:
+            - uuid: 196df6cc08524b9b8676e6b89b4d0f28
+              expression: 'last(/UPS APC/ups.apc["TONBATT"])>0'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/UPS APC/ups.apc["TONBATT"])=0'
+              name: 'Работа от батареи'
+              priority: AVERAGE
+        - uuid: d8344aa922ea4b2394b48d37c24a87ef
+          name: 'Имя ИБП из EEPROM'
+          key: 'ups.apc["UPSNAME"]'
+          delay: 1h
+          trends: '0'
+          value_type: TEXT
+      dashboards:
+        - uuid: 7a59f23b547f49d0a9636af4ca23d460
+          name: 'UPS APC'
+          pages:
+            - widgets:
+                - type: GRAPH_CLASSIC
+                  width: '11'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'UPS APC'
+                        name: 'Сетевое напряжение ИБП'
+                - type: GRAPH_CLASSIC
+                  x: '11'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'UPS APC'
+                        name: 'Напряжение на аккумуляторах'
+                - type: GRAPH_CLASSIC
+                  'y': '5'
+                  width: '11'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'UPS APC'
+                        name: 'Оставшееся время работы от батарей по оценке ИБП'
+                - type: GRAPH_CLASSIC
+                  x: '11'
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'UPS APC'
+                        name: 'Температура ИБП'
+  graphs:
+    - uuid: 96213e5bec984000ad39b765a2ff9293
+      name: 'Напряжение на аккумуляторах'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["BATTV"]'
+        - sortorder: '1'
+          drawtype: DASHED_LINE
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["NOMBATTV"]'
+    - uuid: 8abd6178ed5d4b7097f18d770e9865c3
+      name: 'Оставшееся время работы от батарей по оценке ИБП'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["TIMELEFT"]'
+    - uuid: 27499b5e0c2d4994a085dfbe05765bf2
+      name: 'Сетевое напряжение ИБП'
+      ymin_type_1: ITEM
+      ymin_item_1:
+        host: 'UPS APC'
+        key: 'ups.apc["LOTRANS"]'
+      ymax_type_1: ITEM
+      ymax_item_1:
+        host: 'UPS APC'
+        key: 'ups.apc["HITRANS"]'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["LINEV"]'
+        - sortorder: '1'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["OUTPUTV"]'
+        - sortorder: '2'
+          color: FFC107
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["LINEFREQ"]'
+    - uuid: 41837ede89f64bdbaf0808da29f46bcd
+      name: 'Температура ИБП'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["ITEMP"]'
+    - uuid: 4da6810e58084a82a7299993b05bf912
+      name: 'Уровень заряда батареи'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["BCHARGE"]'
+    - uuid: e4b811dc0eb74438955e07078453ce20
+      name: 'Частота сетевого напряжения'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'UPS APC'
+            key: 'ups.apc["LINEFREQ"]'
